@@ -8,6 +8,7 @@ export default class Login extends React.Component {
         email: "",
         password:"",
         toDashboard: false,
+        selectedOption: "admin"
     }
 
     validateForm = () => {
@@ -16,7 +17,8 @@ export default class Login extends React.Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        localStorage.setItem('userEmail', this.state.email);
+        sessionStorage.setItem('userEmail', this.state.email);
+        localStorage.setItem('userType', this.state.selectedOption);
         this.setState({
             toDashboard: true
         })
@@ -27,6 +29,11 @@ export default class Login extends React.Component {
     onPasswordChange = (event) => {
         this.setState({password: event.target.value});
     }
+    handleOptionChange = (event) =>{
+        this.setState({
+          selectedOption: event.target.value
+        });
+      }
 
     render() {
         if (this.state.toDashboard === true) {
@@ -56,6 +63,20 @@ export default class Login extends React.Component {
                     <Button block bsSize="large" disabled={!this.validateForm()} type="submit">
                         Login
                     </Button>
+                    <div className="user-type">
+                        <div className="radio">
+                            <label>
+                                <input type="radio" value="admin" checked={this.state.selectedOption === 'admin'} onChange={this.handleOptionChange}/>
+                                Admin
+                            </label>
+                        </div>
+                        <div className="radio">
+                            <label>
+                                <input type="radio" value="user" checked={this.state.selectedOption === 'user'} onChange={this.handleOptionChange}/>
+                                User
+                            </label>
+                        </div>
+                    </div>
                 </form>
             </div>
         );

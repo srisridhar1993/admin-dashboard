@@ -21,12 +21,12 @@ export class Dashboard extends Component {
     componentDidMount(){
         debugger;
         this.setState({
-            loggedInUser: localStorage.getItem('userEmail')
+            loggedInUser: sessionStorage.getItem('userEmail')
         });
     }
 
     render() {
-        if(hasRole(admin, ["admin"]) && isAllowed(admin, ["can_view_users"])){
+        if(hasRole(admin, ["admin"]) && isAllowed(admin, ["can_view_users"]) && localStorage.getItem('userType') == 'admin'){
             return (
                 <React.Fragment>
                     <h5 style={{textAlign: "right"}}>Welcome {this.state.loggedInUser}</h5>
@@ -36,7 +36,7 @@ export class Dashboard extends Component {
                     <GridData/>
                 </React.Fragment>
               )
-        } else if (hasRole(user, ["user"]) && isAllowed(user, ["can_view_weather_data"])) {
+        } else if (hasRole(user, ["user"]) && isAllowed(user, ["can_view_weather_data"]) && localStorage.getItem('userType') == 'user') {
             return (
                 <React.Fragment>
                     <Logout/>
